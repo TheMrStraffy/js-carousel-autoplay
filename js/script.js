@@ -9,6 +9,7 @@ const btnDown = document.querySelector(".down");
 //componenti js
 let counter = 0;
 let imgTag = '';
+let clock;
 
 //inserire le immagini in un array
 const imgsArray = [
@@ -33,6 +34,8 @@ for (let i = 0; i < imgsArray.length; i++){
 gallery.innerHTML += imgTag;
 item[counter].classList.add("show-item");
 
+
+
 btnUp.addEventListener('click', function(){
   item[counter].classList.remove("show-item");
   counter++;
@@ -45,10 +48,26 @@ btnDown.addEventListener('click', function(){
   if(counter === -1) counter = item.length - 1;
   item[counter].classList.add("show-item");
 })
-setInterval(function(){
+
+gallery.addEventListener('mouseenter', function(){
+  clearInterval(clock);
+})
+gallery.addEventListener('mouseleave', function(){
+  clock = setInterval(function(){
+    item[counter].classList.remove("show-item");
+    counter++;
+    if(counter === item.length) counter = 0;
+    
+    item[counter].classList.add("show-item");
+    btnDown.classList.remove("hide-item");
+  }, 1500);
+})
+
+clock = setInterval(function(){
   item[counter].classList.remove("show-item");
   counter++;
   if(counter === item.length) counter = 0;
+  
   item[counter].classList.add("show-item");
   btnDown.classList.remove("hide-item");
 }, 1500);
